@@ -7,7 +7,9 @@ const About = defineComponent(
   ({ counter }) => (
     <div>
       <div>this is about page {counter}</div>
-      <Link href="/">home</Link>
+      <Link href="/">
+        <a>home</a>
+      </Link>
     </div>
   )
 );

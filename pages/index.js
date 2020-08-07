@@ -16,7 +16,9 @@ const Home = defineComponent(
         {counter} x 2 = {doubled}
       </div>
       <button onClick={inc}>Increase</button>
-      <Link href="/about">about</Link>
+      <Link href="/about">
+        <a>about</a>
+      </Link>
     </div>
   )
 );
