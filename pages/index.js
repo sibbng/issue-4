@@ -2,14 +2,17 @@ import React from "react";
 import Link from "next/link";
 
 const Home = (props) => {
-  const { counter, inc, setCount } = props;
+  const { counter, inc, setCount, counterFromServer } = props;
 
-  if (typeof window === "undefined") setCount(props.counter);
+  React.useEffect(() => {
+    setCount(counterFromServer);
+  }, [counterFromServer]);
 
   return (
     <div>
       <div>{counter}</div>
       <button onClick={inc}>Increase</button>
+      <button onClick={() => setCount(60)}>60</button>
       <Link href="/about">
         <a>about</a>
       </Link>
@@ -18,11 +21,10 @@ const Home = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  console.log(context);
-  const counter = await new Promise((resolve) =>
+  const counterFromServer = await new Promise((resolve) =>
     setTimeout(() => resolve(50), 1000)
   );
-  return { props: { counter } };
+  return { props: { counterFromServer } };
 }
 
 export default Home;
