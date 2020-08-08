@@ -1,33 +1,30 @@
+import React from "react";
 import Link from "next/link";
-import { computed, defineComponent } from "reactivue";
-import { counter } from "../store";
+import { MyContext } from "./_app";
+import About from "./about";
 
-const Home = defineComponent(
-  ({ result }) => {
-    counter.value = result;
-    const doubled = computed(() => counter.value * 2);
-    const inc = () => (counter.value += 1);
+const Home = (props) => {
+  const { counter, inc, setCount } = React.useContext(MyContext);
 
-    return { counter, doubled, inc };
-  },
-  ({ counter, doubled, inc }) => (
+  if (typeof window === "undefined") setCount(props.counter);
+
+  return (
     <div>
-      <div>
-        {counter} x 2 = {doubled}
-      </div>
+      <div>{counter}</div>
       <button onClick={inc}>Increase</button>
       <Link href="/about">
         <a>about</a>
       </Link>
+      <About />
     </div>
-  )
-);
+  );
+};
 
 export async function getServerSideProps(context) {
-  const result = await new Promise((resolve) =>
-    setTimeout(() => resolve(20), 1000)
+  const counter = await new Promise((resolve) =>
+    setTimeout(() => resolve(50), 1000)
   );
-  return { props: { result } };
+  return { props: { counter } };
 }
 
 export default Home;
