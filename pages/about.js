@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { MyContext } from "./_app";
 
-const About = () => {
-  const { counter } = React.useContext(MyContext);
+const About = (props) => {
+  const { counter } = props;
   return (
     <div>
       <div>this is about page {counter}</div>
